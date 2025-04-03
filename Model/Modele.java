@@ -9,15 +9,15 @@ public class Modele {
 
     private int idModele;  
     private String nomModele;  
-    private int puissance;  
-    private Vector<Modele> listModele;  
+    private int puissance;
+    private Vector<Scooter> listScooters;
     private Vector<Permis> listPermis;  
 
     public Modele(int idModele, String nomModele, int puissance) {
         this.idModele = idModele;
         this.nomModele = nomModele;
         this.puissance = puissance;
-        this.listModele = new Vector<>();
+        this.listScooters = new Vector<>();
         this.listPermis = new Vector<>();
     }
 
@@ -45,12 +45,12 @@ public class Modele {
         this.puissance = puissance;
     }
 
-    public Vector<Modele> getListModele() {
-        return listModele;
+    public Vector<Scooter> getlistScooters() {
+        return listScooters;
     }
 
-    public void setListModele(Vector<Modele> listModele) {
-        this.listModele = listModele;
+    public void setlistScooters(Vector<Scooter> listScooters) {
+        this.listScooters = listScooters;
     }
 
     public Vector<Permis> getListPermis() {

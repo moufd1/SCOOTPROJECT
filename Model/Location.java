@@ -8,18 +8,17 @@ public class Location {
 
     private int idLocation;  
     private Date dateDebut;  
-    private Date dateFin;  
-    private Vector<Retour> listRetour;  
-    private Vector<Scooter> listScooter;  
-    private Client client;  
+    private Date dateFin;
+    private Scooter scooter;
+    private Client client;
+    private Retour retour;
 
-    public Location(int idLocation, Date dateDebut, Date dateFin, Client client) {
+    public Location(int idLocation, Date dateDebut, Date dateFin, Client client,  Scooter scooter) {
         this.idLocation = idLocation;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
-        this.listRetour = new Vector<>();
-        this.listScooter = new Vector<>();
+        this.scooter = scooter;
     }
 
     public int getIdLocation() {
@@ -46,20 +45,16 @@ public class Location {
         this.dateFin = dateFin;
     }
 
-    public List<Retour> getListRetour() {
-        return listRetour;
+
+    public Scooter getScooter() {
+        return scooter;
+    }
+    public void setScooter(Scooter scooter) {
+        this.scooter = scooter;
     }
 
-    public void setListRetour(Vector<Retour> listRetour) {
-        this.listRetour = listRetour;
-    }
-
-    public Vector<Scooter> getListScooter() {
-        return listScooter;
-    }
-
-    public void setListScooter(Vector<Scooter> listScooter) {
-        this.listScooter = listScooter;
+    public void setRetour(Retour retour) {
+        this.retour = retour;
     }
 
     public Client getClient() {

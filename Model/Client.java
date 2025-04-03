@@ -9,14 +9,14 @@ public class Client {
         private String nom;  
         private String prenom;  
         private Vector<Location> listLocation;  
-        private Vector<Permis> listPermis;  
+        private Vector<ParcScooters> listParc;
 
         public Client(int idClient, String nom, String prenom) {
             this.idClient = idClient;
             this.nom = nom;
             this.prenom = prenom;
             this.listLocation = new Vector<>();
-            this.listPermis = new Vector<>();
+            this.listParc = new Vector<>();
         }
 
         public int getIdClient(){
@@ -51,11 +51,11 @@ public class Client {
             this.listLocation = listLocation;
         }
     
-        public Vector<Permis> getListPermis(){
-            return listPermis;
+        public Vector<ParcScooters> getListParc(){
+            return listParc;
         }
     
-        public void setListPermis(Vector<Permis> listPermis){
-            this.listPermis = listPermis;
+        public void setListParc(Vector<ParcScooters> listParc){
+            this.listParc = listParc;
         }
     }

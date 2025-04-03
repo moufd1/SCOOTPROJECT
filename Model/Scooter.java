@@ -7,8 +7,7 @@ import java.util.*;
  */
 public class Scooter {
 
-    private int idScooter;  
-    private Vector<Scooter> listScooter;  
+    private int idScooter;
     private Modele modele;  
     private Vector<Location> listLocation;  
 
@@ -16,7 +15,6 @@ public class Scooter {
     public Scooter(int idScooter, Modele modele) {
         this.idScooter = idScooter;
         this.modele = modele;
-        this.listScooter = new Vector<>();
         this.listLocation = new Vector<>();
     }
 
@@ -27,14 +25,6 @@ public class Scooter {
 
     public void setIdScooter(int idScooter) {
         this.idScooter = idScooter;
-    }
-
-    public Vector<Scooter> getListScooter() {
-        return listScooter;
-    }
-
-    public void setListScooter(Vector<Scooter> listScooter) {
-        this.listScooter = listScooter;
     }
 
     public Modele getModele() {

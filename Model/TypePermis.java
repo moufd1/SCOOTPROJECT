@@ -7,7 +7,8 @@ import java.util.*;
  */
 public class TypePermis {
     private String type;  
-    private Vector<Permis> listPermis;  
+    private Vector<Permis> listPermis;
+    private Vector<Modele> listModele;
 
     
     public TypePermis(String type) {
@@ -32,4 +33,11 @@ public class TypePermis {
         this.listPermis = listPermis;
     }
 
+    public Vector<Modele> getListModele() {
+        return listModele;
+    }
+
+    public void setListModele(Vector<Modele> listModele) {
+        this.listModele = listModele;
+    }
 }

@@ -10,13 +10,15 @@ public class ParcScooters {
     private int idParc; 
     private String nomParc;  
     private Vector<Scooter> listScooter;  
-    private Vector<Client> listClient;  
+    private Vector<Client> listClient;
+    private Vector<Location> listLocation;
 
     public ParcScooters(int idParc, String nomParc) {
         this.idParc = idParc;
         this.nomParc = nomParc;
         this.listScooter = new Vector<>();
         this.listClient = new Vector<>();
+        this.listLocation= new Vector<>();
     }
 
     public int getIdParc() {
@@ -49,5 +51,13 @@ public class ParcScooters {
 
     public void setListClient(Vector<Client> listClient) {
         this.listClient = listClient;
+    }
+
+    public Vector<Location> getListLocation() {
+        return listLocation;
+    }
+
+    public void setListLocation(Vector<Location> listLocation) {
+        this.listLocation = listLocation;
     }
 }
