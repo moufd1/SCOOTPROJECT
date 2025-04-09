@@ -6,7 +6,6 @@ import java.util.*;
  * 
  */
 public class Modele {
-
     private int idModele;  
     private String nomModele;  
     private int puissance;
@@ -49,15 +48,21 @@ public class Modele {
         return listScooters;
     }
 
-    public void setlistScooters(Vector<Scooter> listScooters) {
-        this.listScooters = listScooters;
+   public void addScooter(Scooter scooter) {
+        this.listScooters.add(scooter);
+    }
+    public void removeScooter(Scooter scooter) {
+        this.listScooters.remove(scooter);
+    }
+    public void addPermis(Permis permis) {
+        this.listPermis.add(permis);
+    }
+    public void removePermis(Permis permis) {
+        this.listPermis.remove(permis);
     }
 
     public Vector<Permis> getListPermis() {
         return listPermis;
     }
 
-    public void setListPermis(Vector<Permis> listPermis) {
-        this.listPermis = listPermis;
-    }
 }

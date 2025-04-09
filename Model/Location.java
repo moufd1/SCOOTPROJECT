@@ -13,12 +13,13 @@ public class Location {
     private Client client;
     private Retour retour;
 
-    public Location(int idLocation, Date dateDebut, Date dateFin, Client client,  Scooter scooter) {
+    public Location(int idLocation, Date dateDebut, Date dateFin, Client client,  Scooter scooter, Retour retour) {
         this.idLocation = idLocation;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
         this.scooter = scooter;
+        this.retour = retour;
     }
 
     public int getIdLocation() {
@@ -64,5 +65,12 @@ public class Location {
     public void setClient(Client client) {
         this.client = client;
     }
+    public Retour getRetour() {
+        return retour;
+    }
+    public void setRetour(double kmRetour) {
+        this.retour.setKmRetour(kmRetour);
+    }
+    
 
 }

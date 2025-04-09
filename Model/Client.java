@@ -7,14 +7,16 @@ import java.util.*;
 public class Client {
         private int idClient;  
         private String nom;  
-        private String prenom;  
+        private String prenom;
+        private Permis permis;  
         private Vector<Location> listLocation;  
         private Vector<ParcScooters> listParc;
 
-        public Client(int idClient, String nom, String prenom) {
+        public Client(int idClient, String nom, String prenom,Permis permis) {
             this.idClient = idClient;
             this.nom = nom;
             this.prenom = prenom;
+            this.permis = permis;
             this.listLocation = new Vector<>();
             this.listParc = new Vector<>();
         }
@@ -57,5 +59,11 @@ public class Client {
     
         public void setListParc(Vector<ParcScooters> listParc){
             this.listParc = listParc;
+        }
+        public Permis getPermis() {
+            return permis;
+        }
+        public void setPermis(Permis permis) {
+            this.permis = permis;
         }
     }

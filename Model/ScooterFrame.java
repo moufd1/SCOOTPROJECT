@@ -31,8 +31,8 @@ public class ScooterFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String modele = txtModele.getText();
                 if (!modele.isEmpty()) {
-                    Modele m = new Modele(1, modele, 50);  // Créer un modèle de scooter avec ID auto-généré
-                    Scooter scooter = new Scooter(1, m);  // Créer un scooter avec ID auto-généré
+                    Modele m = new Modele(1, modele, 50);  
+                    Scooter scooter = new Scooter(1, m, null); 
                     JOptionPane.showMessageDialog(null, "Scooter ajouté avec modèle : " + modele);
                 } else {
                     JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs.");

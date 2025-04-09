@@ -14,8 +14,8 @@ public class TypePermis {
     public TypePermis(String type) {
         this.type = type;
         this.listPermis = new Vector<>();
+        this.listModele = new Vector<>();
     }
-
     
     public String getType() {
         return type;
@@ -28,16 +28,20 @@ public class TypePermis {
     public Vector<Permis> getListPermis() {
         return listPermis;
     }
-
-    public void setListPermis(Vector<Permis> listPermis) {
-        this.listPermis = listPermis;
-    }
-
     public Vector<Modele> getListModele() {
         return listModele;
     }
-
-    public void setListModele(Vector<Modele> listModele) {
-        this.listModele = listModele;
+    public void addListModele(Modele modele) {
+        this.listModele.add(modele);
     }
+    public void removeListModele(Modele modele) {
+        this.listModele.remove(modele);
+    }  
+    public void addPermis(Permis permis) {
+        this.listPermis.add(permis);
+    }
+    public void removePermis(Permis permis) {
+        this.listPermis.remove(permis);
+    }
+
 }

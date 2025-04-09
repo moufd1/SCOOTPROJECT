@@ -41,23 +41,33 @@ public class ParcScooters {
         return listScooter;
     }
 
-    public void setListScooter(Vector<Scooter> listScooter) {
-        this.listScooter = listScooter;
+    public void addScooter(Scooter scooter) {
+        this.listScooter.add(scooter);
     }
 
     public Vector<Client> getListClient() {
         return listClient;
     }
 
-    public void setListClient(Vector<Client> listClient) {
-        this.listClient = listClient;
+    public void addClient(Client client) {
+        this.listClient.add(client);
+    }
+    public void removeClient(Client client) {
+        this.listClient.remove(client);
     }
 
     public Vector<Location> getListLocation() {
         return listLocation;
     }
 
-    public void setListLocation(Vector<Location> listLocation) {
-        this.listLocation = listLocation;
+    public void addLocation(Location location) {
+        this.listLocation.add(location);
     }
+    public void removeLocation(Location location) {
+        this.listLocation.remove(location);
+    }
+    public void removeScooter(Scooter scooter) {
+        this.listScooter.remove(scooter);
+    }
+    
 }

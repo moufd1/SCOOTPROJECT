@@ -41,8 +41,7 @@ public class LocationFrame extends JFrame {
                     try {
                         Date dateDebut = new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutStr);
                         Date dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(dateFinStr);
-                        
-                        Location location = new Location(1, dateDebut, dateFin, new Client(1, "John", "Doe"));
+                        Location location = new Location(1, dateDebut, dateFin, new Client(1, "BELLAH", "Moufdi",new Permis(ABORT, dateFin, dateFinStr)),new Scooter(12,new Modele(ALLBITS, dateFinStr, ABORT) ));
                         JOptionPane.showMessageDialog(null, "Location créée du " + dateDebut + " au " + dateFin);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Erreur de format de date.");

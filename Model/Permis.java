@@ -48,8 +48,12 @@ public class Permis {
         return listTypePermis;
     }
 
-    public void setListTypePermis(Vector<TypePermis> listTypePermis) {
-        this.listTypePermis = listTypePermis;
+    public void addTypePermis(TypePermis typePermis) {
+        this.listTypePermis.add(typePermis);
     }
+    public void removeTypePermis(TypePermis typePermis) {
+        this.listTypePermis.remove(typePermis);
+    }
+
 
 }

@@ -9,10 +9,12 @@ public class Scooter {
 
     private int idScooter;
     private Modele modele;  
+    private ParcScooters parc;
     private Vector<Location> listLocation;  
 
     
-    public Scooter(int idScooter, Modele modele) {
+    public Scooter(int idScooter, Modele modele, ParcScooters parc) {
+        this.parc = parc;
         this.idScooter = idScooter;
         this.modele = modele;
         this.listLocation = new Vector<>();
@@ -38,9 +40,18 @@ public class Scooter {
     public Vector<Location> getListLocation() {
         return listLocation;
     }
-
-    public void setListLocation(Vector<Location> listLocation) {
-        this.listLocation = listLocation;
+    public ParcScooters getParc() {
+        return parc;
     }
+    public void setParc(ParcScooters parc) {
+        this.parc = parc;
+    }
+    public void addLocation(Location location) {
+        this.listLocation.add(location);
+    }
+    public void removeLocation(Location location) {
+        this.listLocation.remove(location);
+    }
+    
 }
 
