@@ -1,4 +1,4 @@
-
+package Model;
 import java.io.*;
 import java.util.*;
 
@@ -53,7 +53,7 @@ public class Scooter {
         this.listLocation.remove(location);
     }
 
-    private boolean disponible = true; // Par défaut, le scooter est disponible
+    private boolean disponible = true; 
 
     public boolean estDisponible() {
         return disponible;

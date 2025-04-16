@@ -1,6 +1,7 @@
 import java.util.*;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
+import Model.*;
 
 public class main {
     public static void main(String[] args) {

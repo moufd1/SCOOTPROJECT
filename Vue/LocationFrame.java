@@ -1,4 +1,10 @@
+package Vue;
 import javax.swing.*;
+import Model.Client;
+import Model.Location;
+import Model.Modele;
+import Model.Scooter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

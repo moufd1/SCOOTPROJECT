@@ -1,4 +1,4 @@
-
+package Model;
 import java.util.*;
 
 /**
@@ -79,7 +79,7 @@ public class Location {
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", client=" + (client != null ? client.getNom() : "N/A") +
-                ", scooter=" + (scooter != null ? scooter.getIdScoot() : "N/A") +
+                ", scooter=" + (scooter != null ? scooter.getIdScooter() : "N/A") +
                 " }";
     }
 

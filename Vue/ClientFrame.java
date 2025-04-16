@@ -1,6 +1,7 @@
+package Vue;
 import javax.swing.*;
 import java.awt.*;
-
+import Model.*;
 public class ClientFrame extends JFrame {
     private JTextField txtNom, txtPrenom;
 
@@ -28,6 +29,5 @@ public class ClientFrame extends JFrame {
         add(txtPrenom);
         add(btnAjouterClient);
 
-        
     }
 }
