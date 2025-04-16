@@ -52,6 +52,23 @@ public class Scooter {
     public void removeLocation(Location location) {
         this.listLocation.remove(location);
     }
+
+    private boolean disponible = true; // Par défaut, le scooter est disponible
+
+    public boolean estDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean dispo) {
+        this.disponible = dispo;
+    }
     
+    @Override
+    public String toString() {
+        return "Scooter { " +
+                "idScoot=" + idScooter +
+                ", modele=" + (modele != null ? modele.getNomModele() : "N/A") +
+                " }";
+    }
 }
 

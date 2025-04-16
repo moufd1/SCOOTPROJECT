@@ -72,5 +72,16 @@ public class Location {
         this.retour.setKmRetour(kmRetour);
     }
     
+    @Override
+    public String toString() {
+        return "Location { " +
+                "idLocation=" + idLocation +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", client=" + (client != null ? client.getNom() : "N/A") +
+                ", scooter=" + (scooter != null ? scooter.getIdScoot() : "N/A") +
+                " }";
+    }
+
 
 }

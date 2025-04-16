@@ -70,4 +70,24 @@ public class ParcScooters {
         this.listScooter.remove(scooter);
     }
     
+    public void ajouterScooter(Scooter scooter) {
+        if (scooter != null) {
+            listScooter.add(scooter);
+        }
+    }
+
+    public void retirerScooter(Scooter scooter) {
+        listScooter.remove(scooter);
+    }
+
+    public List<Scooter> getScootersDisponibles() {
+        List<Scooter> disponibles = new ArrayList<>();
+        for (Scooter s : listScooter) {
+            if (s.estDisponible()) {
+                disponibles.add(s);
+            }
+        }
+        return disponibles;
+    
+    }
 }
