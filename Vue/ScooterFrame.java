@@ -1,13 +1,11 @@
 package Vue;
-import javax.swing.*;
-import Model.*;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ScooterFrame extends JFrame {
     private JTextField txtModele;
+    private JButton btnAjouterScooter;
 
     public ScooterFrame() {
         setTitle("Gérer les Scooters");
@@ -17,30 +15,22 @@ public class ScooterFrame extends JFrame {
 
         setLayout(new FlowLayout());
 
-        
         JLabel lblModele = new JLabel("Modèle :");
         txtModele = new JTextField(20);
 
-        
-        JButton btnAjouterScooter = new JButton("Ajouter Scooter");
+        btnAjouterScooter = new JButton("Ajouter Scooter");
 
-        
         add(lblModele);
         add(txtModele);
         add(btnAjouterScooter);
+    }
 
-        
-        btnAjouterScooter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String modele = txtModele.getText();
-                if (!modele.isEmpty()) {
-                    Modele m = new Modele(1, modele, 50);  
-                    Scooter scooter = new Scooter(1, m, null); 
-                    JOptionPane.showMessageDialog(null, "Scooter ajouté avec modèle : " + modele);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs.");
-                }
-            }
-        });
+    // Getters for controller access
+    public JTextField getTxtModele() {
+        return txtModele;
+    }
+
+    public JButton getBtnAjouterScooter() {
+        return btnAjouterScooter;
     }
 }

@@ -1,24 +1,26 @@
 package Model;
-import java.io.*;
+
 import java.util.*;
 
-/**
- * 
- */
 public class ParcScooters {
-
-    private int idParc; 
-    private String nomParc;  
-    private Vector<Scooter> listScooter;  
+    private int idParc;
+    private String nomParc;
+    private Vector<Scooter> listScooter;
     private Vector<Client> listClient;
     private Vector<Location> listLocation;
+    private static int nextId = 1; 
 
     public ParcScooters(int idParc, String nomParc) {
         this.idParc = idParc;
         this.nomParc = nomParc;
         this.listScooter = new Vector<>();
         this.listClient = new Vector<>();
-        this.listLocation= new Vector<>();
+        this.listLocation = new Vector<>();
+    }
+
+    
+    public static int getNextId() {
+        return nextId++;
     }
 
     public int getIdParc() {
@@ -52,6 +54,7 @@ public class ParcScooters {
     public void addClient(Client client) {
         this.listClient.add(client);
     }
+
     public void removeClient(Client client) {
         this.listClient.remove(client);
     }
@@ -63,13 +66,15 @@ public class ParcScooters {
     public void addLocation(Location location) {
         this.listLocation.add(location);
     }
+
     public void removeLocation(Location location) {
         this.listLocation.remove(location);
     }
+
     public void removeScooter(Scooter scooter) {
         this.listScooter.remove(scooter);
     }
-    
+
     public void ajouterScooter(Scooter scooter) {
         if (scooter != null) {
             listScooter.add(scooter);
@@ -88,6 +93,5 @@ public class ParcScooters {
             }
         }
         return disponibles;
-    
     }
 }

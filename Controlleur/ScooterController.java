@@ -1,0 +1,37 @@
+package Controlleur;
+import javax.swing.*;
+import Model.Modele;
+import Model.ParcScooters;
+import Model.Scooter;
+import Vue.ScooterFrame;
+
+public class ScooterController {
+    private ScooterFrame view;
+    private ParcScooters parc;
+
+    public ScooterController(ScooterFrame view, ParcScooters parc) {
+        this.view = view;
+        this.parc = parc;
+        initController();
+    }
+
+    private void initController() {
+        view.getBtnAjouterScooter().addActionListener(e -> ajouterScooter());
+    }
+
+    private void ajouterScooter() {
+        String modeleNom = view.getTxtModele().getText();
+
+        if (!modeleNom.isEmpty()) {
+            // Create a new scooter
+            Modele modele = new Modele(parc.getListScooter().size() + 1, modeleNom, 50); // Default puissance
+            Scooter scooter = new Scooter(parc.getListScooter().size() + 1, modele, parc);
+            parc.addScooter(scooter);
+            modele.addScooter(scooter); 
+            JOptionPane.showMessageDialog(view, "Scooter ajouté avec modèle : " + modeleNom);
+            view.getTxtModele().setText("");
+        } else {
+            JOptionPane.showMessageDialog(view, "Veuillez remplir tous les champs.");
+        }
+    }
+}   

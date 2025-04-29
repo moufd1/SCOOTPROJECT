@@ -1,19 +1,12 @@
 package Vue;
-import javax.swing.*;
-import Model.Client;
-import Model.Location;
-import Model.Modele;
-import Model.Scooter;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 public class LocationFrame extends JFrame {
-    private JTextField txtDateDebut, txtDateFin, txtNomClient;
+    private JTextField txtDateDebut, txtDateFin, txtNomClient, txtPrenomClient;
     private JComboBox<String> comboScooter;
+    private JButton btnCreerLocation;
 
     public LocationFrame() {
         setTitle("Gérer les Locations");
@@ -26,7 +19,7 @@ public class LocationFrame extends JFrame {
         txtNomClient = new JTextField(20);
 
         JLabel lblPrenomClient = new JLabel("Prénom du Client :");
-        JTextField txtPrenomClient = new JTextField(20);
+        txtPrenomClient = new JTextField(20);
 
         JLabel lblDateDebut = new JLabel("Date de Début (AAAA-MM-JJ) :");
         txtDateDebut = new JTextField(10);
@@ -35,9 +28,9 @@ public class LocationFrame extends JFrame {
         txtDateFin = new JTextField(10);
 
         JLabel lblScooter = new JLabel("Scooter :");
-        comboScooter = new JComboBox<>(new String[]{"Scooter 1", "Scooter 2"}); 
+        comboScooter = new JComboBox<>();
 
-        JButton btnCreerLocation = new JButton("Créer Location");
+        btnCreerLocation = new JButton("Créer Location");
 
         add(lblNomClient);
         add(txtNomClient);
@@ -50,33 +43,30 @@ public class LocationFrame extends JFrame {
         add(lblScooter);
         add(comboScooter);
         add(btnCreerLocation);
+    }
 
-        btnCreerLocation.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String nomClient = txtNomClient.getText();
-                String prenomClient = txtPrenomClient.getText();
-                String dateDebutStr = txtDateDebut.getText();
-                String dateFinStr = txtDateFin.getText();
-                String scooterSelectionne = (String) comboScooter.getSelectedItem();
 
-                if (!nomClient.isEmpty() && !dateDebutStr.isEmpty() && !dateFinStr.isEmpty() && scooterSelectionne != null) {
-                    try {
-                        Date dateDebut = new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutStr);
-                        Date dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(dateFinStr);
+    public JTextField getTxtNomClient() {
+        return txtNomClient;
+    }
 
-                        Client client = new Client(1, nomClient, prenomClient, null); 
-                        Scooter scooter = new Scooter(1, new Modele(1, scooterSelectionne, 125), null); 
+    public JTextField getTxtPrenomClient() {
+        return txtPrenomClient;
+    }
 
-                        Location location = new Location(1, dateDebut, dateFin, client, scooter, null);
+    public JTextField getTxtDateDebut() {
+        return txtDateDebut;
+    }
 
-                        JOptionPane.showMessageDialog(null, "Location créée pour le client " + nomClient + " avec le scooter " + scooterSelectionne);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Erreur : " + ex.getMessage());
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs.");
-                }
-            }
-        });
+    public JTextField getTxtDateFin() {
+        return txtDateFin;
+    }
+
+    public JComboBox<String> getComboScooter() {
+        return comboScooter;
+    }
+
+    public JButton getBtnCreerLocation() {
+        return btnCreerLocation;
     }
 }
