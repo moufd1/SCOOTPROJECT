@@ -11,6 +11,8 @@ public class Scooter {
     private Modele modele;  
     private ParcScooters parc;
     private Vector<Location> listLocation;  
+    private boolean disponible = true; // Indique si le scooter est disponible
+    private Location locationActuelle; // Location en cours
 
     
     public Scooter(int idScooter, Modele modele, ParcScooters parc) {
@@ -53,7 +55,6 @@ public class Scooter {
         this.listLocation.remove(location);
     }
 
-    private boolean disponible = true; 
 
     public boolean estDisponible() {
         return disponible;
@@ -69,7 +70,14 @@ public class Scooter {
         }
         return total;
     }
-    
+    public Location getLocationActuelle() {
+        return locationActuelle;
+    }
+
+    public void setLocationActuelle(Location locationActuelle) {
+        this.locationActuelle = locationActuelle;
+        this.disponible = (locationActuelle == null); // Met à jour la disponibilité
+    }
     @Override
     public String toString() {
         return "Scooter { " +
@@ -78,4 +86,3 @@ public class Scooter {
                 " }";
     }
 }
-

@@ -1,5 +1,5 @@
 package Model;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -73,10 +73,7 @@ public class Location {
         this.retour.setKmRetour(kmRetour);
     }
     public double calculerMontant() {
-        Period periode = Period.between(dateDebut, dateFin);
-        int nbJours = periode.getDays()
-                      + periode.getMonths() * 30   // à ajuster selon ta logique
-                      + periode.getYears() * 365;
+        long nbJours = ChronoUnit.DAYS.between(dateDebut.toInstant(), dateFin.toInstant());
         if (nbJours < 0) {
             throw new IllegalStateException("Date de fin antérieure à la date de début");
         }

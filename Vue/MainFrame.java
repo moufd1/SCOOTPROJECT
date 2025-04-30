@@ -3,7 +3,7 @@ package Vue;
 import Controlleur.ClientController;
 import Controlleur.LocationController;
 import Controlleur.ScooterController;
-import Model.ParcScooters;
+import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,27 +37,56 @@ public class MainFrame extends JFrame {
         JButton btnClient = new JButton("Gérer les Clients");
         JButton btnScooter = new JButton("Gérer les Scooters");
         JButton btnLocation = new JButton("Gérer les Locations");
+        JButton btnChiffreAffaires = new JButton("Afficher Chiffre d'Affaires");
+        JButton btnDepensesClients = new JButton("Afficher Dépenses des Clients");
+        JButton btnScootersDisponibles = new JButton("Scooters Disponibles");
 
         add(btnClient);
         add(btnScooter);
         add(btnLocation);
+        add(btnChiffreAffaires);
+        add(btnDepensesClients);
+        add(btnScootersDisponibles);
 
         btnClient.addActionListener(e -> {
-            ClientFrame clientFrame = new ClientFrame();
+            ClientFrame clientFrame = new ClientFrame(parc); // Passez l'objet parc
             new ClientController(clientFrame, parc);
             clientFrame.setVisible(true);
         });
 
         btnScooter.addActionListener(e -> {
-            ScooterFrame scooterFrame = new ScooterFrame();
+            ScooterFrame scooterFrame = new ScooterFrame(parc); // Passez l'objet parc
             new ScooterController(scooterFrame, parc);
             scooterFrame.setVisible(true);
         });
 
         btnLocation.addActionListener(e -> {
-            LocationFrame locationFrame = new LocationFrame();
-            new LocationController(locationFrame, parc);
+            LocationFrame locationFrame = new LocationFrame(parc); // Passez l'objet parc
             locationFrame.setVisible(true);
+        });
+
+        btnChiffreAffaires.addActionListener(e -> {
+            double chiffreAffaires = parc.calculerChiffreAffaires();
+            JOptionPane.showMessageDialog(this, "Chiffre d'affaires du parc : " + chiffreAffaires + " €");
+        });
+
+        btnDepensesClients.addActionListener(e -> {
+            StringBuilder sb = new StringBuilder("Dépenses totales des clients :\n");
+            for (Client client : parc.getListClient()) {
+                double depenseTotale = client.calculerDepenseTotale();
+                sb.append("- Client : ").append(client.getNom()).append(" ").append(client.getPrenom())
+                  .append(", Dépense totale : ").append(depenseTotale).append(" €\n");
+            }
+            JOptionPane.showMessageDialog(this, sb.toString());
+        });
+
+        btnScootersDisponibles.addActionListener(e -> {
+            StringBuilder sb = new StringBuilder("Scooters disponibles :\n");
+            for (Scooter scooter : parc.getScootersDisponibles()) {
+                sb.append("- Scooter ID : ").append(scooter.getIdScooter())
+                  .append(", Modèle : ").append(scooter.getModele().getNomModele()).append("\n");
+            }
+            JOptionPane.showMessageDialog(this, sb.toString());
         });
     }
 

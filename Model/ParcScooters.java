@@ -91,4 +91,11 @@ public class ParcScooters {
         }
         return disponibles;
     }
+    public double calculerChiffreAffaires() {
+        double total = 0.0;
+        for (Location loc : listLocation) {
+            total += loc.calculerMontant();
+        }
+        return total;
+    }
 }
