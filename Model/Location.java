@@ -1,4 +1,5 @@
 package Model;
+import java.time.Period;
 import java.util.*;
 
 /**
@@ -70,6 +71,24 @@ public class Location {
     }
     public void setRetour(double kmRetour) {
         this.retour.setKmRetour(kmRetour);
+    }
+    public double calculerMontant() {
+        Period periode = Period.between(dateDebut, dateFin);
+        int nbJours = periode.getDays()
+                      + periode.getMonths() * 30   // à ajuster selon ta logique
+                      + periode.getYears() * 365;
+        if (nbJours < 0) {
+            throw new IllegalStateException("Date de fin antérieure à la date de début");
+        }
+        double tarifJournalier = 20.0;
+        return nbJours * tarifJournalier;
+    }
+
+    public void cloturer(Retour retour) {
+        this.retour = retour;
+        if (scooter != null) {
+            scooter.setDisponible(true);
+        }
     }
     
     @Override

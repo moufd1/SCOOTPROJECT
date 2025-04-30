@@ -12,8 +12,7 @@ public class MainFrame extends JFrame {
     private ParcScooters parc;
 
     public MainFrame() {
-        parc = new ParcScooters(1, "Parc Principal"); // Initialize the model
-
+        parc = new ParcScooters(1, "Parc Principal"); 
         setTitle("Gestion de Location de Scooters");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

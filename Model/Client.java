@@ -90,6 +90,22 @@ public class Client {
                 listLocation.add(location);
             }
         }
+        public boolean supprimerLocation(Location location) {
+            return listLocation.remove(location);
+        }
+
+        public int getNombreLocations() {
+            return listLocation.size();
+        }
+
+        public double calculerDepenseTotale() {
+            double total = 0.0;
+            for (Location loc : listLocation) {
+                // calculerMontant() doit renvoyer le montant de la location
+                total += loc.calculerMontant();
+            }
+            return total;
+        }
 
         public void afficherHistoriqueLocations() {
             System.out.println("Historique des locations pour " + nom + " " + prenom + " :");

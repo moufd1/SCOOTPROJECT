@@ -25,7 +25,7 @@ public class ScooterFrame extends JFrame {
         add(btnAjouterScooter);
     }
 
-    // Getters for controller access
+
     public JTextField getTxtModele() {
         return txtModele;
     }

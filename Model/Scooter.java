@@ -62,6 +62,13 @@ public class Scooter {
     public void setDisponible(boolean dispo) {
         this.disponible = dispo;
     }
+    public double calculerChiffreAffaires() {
+        double total = 0.0;
+        for (Location loc : listLocation) {
+            total += loc.calculerMontant();
+        }
+        return total;
+    }
     
     @Override
     public String toString() {

@@ -71,9 +71,6 @@ public class ParcScooters {
         this.listLocation.remove(location);
     }
 
-    public void removeScooter(Scooter scooter) {
-        this.listScooter.remove(scooter);
-    }
 
     public void ajouterScooter(Scooter scooter) {
         if (scooter != null) {

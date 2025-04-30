@@ -44,7 +44,6 @@ public class LocationController {
                 Date dateDebut = sdf.parse(dateDebutStr);
                 Date dateFin = sdf.parse(dateFinStr);
 
-                // Find client (or create if not exists)
                 Client client = parc.getListClient().stream()
                         .filter(c -> c.getNom().equals(nomClient) && c.getPrenom().equals(prenomClient))
                         .findFirst()
@@ -54,7 +53,6 @@ public class LocationController {
                             return newClient;
                         });
 
-                // Find scooter
                 int scooterId = Integer.parseInt(scooterSelectionne.split("ID: ")[1].replace(")", ""));
                 Scooter scooter = parc.getListScooter().stream()
                         .filter(s -> s.getIdScooter() == scooterId)
@@ -62,7 +60,7 @@ public class LocationController {
                         .orElse(null);
 
                 if (scooter != null && scooter.estDisponible()) {
-                    scooter.setDisponible(false); // Mark scooter as rented
+                    scooter.setDisponible(false);
                     Location location = new Location(parc.getListLocation().size() + 1, dateDebut, dateFin, client, scooter, null);
                     parc.addLocation(location);
                     client.ajouterLocation(location);

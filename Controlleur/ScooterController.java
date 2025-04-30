@@ -23,8 +23,7 @@ public class ScooterController {
         String modeleNom = view.getTxtModele().getText();
 
         if (!modeleNom.isEmpty()) {
-            // Create a new scooter
-            Modele modele = new Modele(parc.getListScooter().size() + 1, modeleNom, 50); // Default puissance
+            Modele modele = new Modele(parc.getListScooter().size() + 1, modeleNom, 50); 
             Scooter scooter = new Scooter(parc.getListScooter().size() + 1, modele, parc);
             parc.addScooter(scooter);
             modele.addScooter(scooter); 
