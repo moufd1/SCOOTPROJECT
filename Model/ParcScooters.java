@@ -72,12 +72,6 @@ public class ParcScooters {
     }
 
 
-    public void ajouterScooter(Scooter scooter) {
-        if (scooter != null) {
-            listScooter.add(scooter);
-        }
-    }
-
     public void retirerScooter(Scooter scooter) {
         listScooter.remove(scooter);
     }

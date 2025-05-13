@@ -23,13 +23,17 @@ public class LocationController {
         updateScooterCombo();
         view.getBtnCreerLocation().addActionListener(e -> creerLocation());
     }
-
-    private void updateScooterCombo() {
-        view.getComboScooter().removeAllItems();
-        for (Scooter scooter : parc.getScootersDisponibles()) {
-            view.getComboScooter().addItem(scooter.getModele().getNomModele() + " (ID: " + scooter.getIdScooter() + ")");
-        }
+    
+   private void updateScooterCombo() {
+    System.out.println("---- Scooters dans le parc ----");
+    for (Scooter s : parc.getListScooter()) {
+        System.out.println(s.getIdScooter() + " " + s.getModele().getNomModele() + " dispo=" + s.estDisponible());
     }
+    view.getComboScooter().removeAllItems();
+    for (Scooter scooter : parc.getScootersDisponibles()) {
+        view.getComboScooter().addItem(scooter.getModele().getNomModele() + " (ID: " + scooter.getIdScooter() + ")");
+    }
+}
 
     private void creerLocation() {
         String nomClient = view.getTxtNomClient().getText();
@@ -66,7 +70,8 @@ public class LocationController {
                     client.ajouterLocation(location);
                     scooter.addLocation(location);
                     JOptionPane.showMessageDialog(view, "Location créée pour " + nomClient + " avec scooter " + scooterSelectionne);
-                    updateScooterCombo(); 
+                    updateScooterCombo();
+                    view.rafraichirTableauLocations(); // <-- AJOUTE CETTE LIGNE
                 } else {
                     JOptionPane.showMessageDialog(view, "Scooter non disponible.");
                 }
@@ -76,5 +81,7 @@ public class LocationController {
         } else {
             JOptionPane.showMessageDialog(view, "Veuillez remplir tous les champs.");
         }
+        
     }
+    
 }

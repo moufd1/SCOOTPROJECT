@@ -65,6 +65,29 @@ public class LocationFrame extends JFrame {
         // Action pour créer une nouvelle location
         btnCreerLocation.addActionListener(e -> creerLocation());
     }
+        public JTextField getTxtNomClient() {
+        return txtNomClient;
+    }
+
+    public JTextField getTxtPrenomClient() {
+        return txtPrenomClient;
+    }
+
+    public JTextField getTxtDateDebut() {
+        return txtDateDebut;
+    }
+
+    public JTextField getTxtDateFin() {
+        return txtDateFin;
+    }
+
+    public JComboBox<String> getComboScooter() {
+        return comboScooter;
+    }
+
+    public JButton getBtnCreerLocation() {
+        return btnCreerLocation;
+    }
 
     private void creerLocation() {
         try {
@@ -122,6 +145,7 @@ public class LocationFrame extends JFrame {
                 dateDebutStr,
                 dateFinStr
             });
+            
 
             JOptionPane.showMessageDialog(this, "Location créée avec succès !");
             // Réinitialiser les champs du formulaire
@@ -133,4 +157,16 @@ public class LocationFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "Erreur lors de la création de la location : " + e.getMessage());
         }
     }
+    public void rafraichirTableauLocations() {
+    tableModel.setRowCount(0); // Vide le tableau
+    for (Location loc : parc.getListLocation()) {
+        tableModel.addRow(new Object[]{
+            loc.getIdLocation(),
+            loc.getClient().getNom() + " " + loc.getClient().getPrenom(),
+            loc.getScooter().getModele().getNomModele(),
+            new SimpleDateFormat("yyyy-MM-dd").format(loc.getDateDebut()),
+            new SimpleDateFormat("yyyy-MM-dd").format(loc.getDateFin())
+        });
+    }
+}
 }
