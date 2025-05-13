@@ -1,6 +1,7 @@
 package Model;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -73,12 +74,10 @@ public class Location {
         this.retour.setKmRetour(kmRetour);
     }
     public double calculerMontant() {
-        long nbJours = ChronoUnit.DAYS.between(dateDebut.toInstant(), dateFin.toInstant());
-        if (nbJours < 0) {
-            throw new IllegalStateException("Date de fin antérieure à la date de début");
-        }
-        double tarifJournalier = 20.0;
-        return nbJours * tarifJournalier;
+        long diffMillis = dateFin.getTime() - dateDebut.getTime();
+        long nbJours = Math.max(1, TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS));
+        double tarif = scooter.getModele().getTarifJournalier();
+        return nbJours * tarif;
     }
 
     public void cloturer(Retour retour) {

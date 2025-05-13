@@ -6,6 +6,8 @@ import java.util.List;
 
 public class ScooterFrame extends JFrame {
     private JTextField txtModele;
+    private JTextField txtPuissance;
+    private JTextField txtTarifJournalier;
     private JButton btnAjouterScooter;
     private JButton btnAfficherDisponibles;
     private JButton btnCalculerChiffreAffaires;
@@ -21,7 +23,11 @@ public class ScooterFrame extends JFrame {
         setLayout(new FlowLayout());
 
         JLabel lblModele = new JLabel("Modèle :");
-        txtModele = new JTextField(20);
+        txtModele = new JTextField(15);
+        JLabel lblPuissance = new JLabel("Puissance :");
+        txtPuissance = new JTextField(5);
+        JLabel lblTarif = new JLabel("Tarif journalier (€) :");
+        txtTarifJournalier = new JTextField(7);
 
         btnAjouterScooter = new JButton("Ajouter Scooter");
         btnAfficherDisponibles = new JButton("Afficher Scooters Disponibles");
@@ -29,6 +35,10 @@ public class ScooterFrame extends JFrame {
 
         add(lblModele);
         add(txtModele);
+        add(lblPuissance);
+        add(txtPuissance);
+        add(lblTarif);
+        add(txtTarifJournalier);
         add(btnAjouterScooter);
         add(btnAfficherDisponibles);
         add(btnCalculerChiffreAffaires);
@@ -36,8 +46,11 @@ public class ScooterFrame extends JFrame {
         btnAfficherDisponibles.addActionListener(e -> {
             StringBuilder sb = new StringBuilder("Scooters disponibles :\n");
             for (Scooter scooter : parc.getScootersDisponibles()) {
+                Modele modele = scooter.getModele();
                 sb.append("- Scooter ID : ").append(scooter.getIdScooter())
-                  .append(", Modèle : ").append(scooter.getModele().getNomModele()).append("\n");
+                  .append(", Modèle : ").append(modele.getNomModele())
+                  .append(", Puissance : ").append(modele.getPuissance())
+                  .append(", Tarif journalier : ").append(modele.getTarifJournalier()).append(" €\n");
             }
             JOptionPane.showMessageDialog(this, sb.toString());
         });
@@ -65,4 +78,7 @@ public class ScooterFrame extends JFrame {
     public JButton getBtnAjouterScooter() {
         return btnAjouterScooter;
     }
+    public JTextField getTxtPuissance() { return txtPuissance; }
+    public JTextField getTxtTarifJournalier() { return txtTarifJournalier; }
+
 }

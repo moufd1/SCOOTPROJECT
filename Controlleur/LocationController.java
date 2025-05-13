@@ -34,7 +34,7 @@ public class LocationController {
         view.getComboScooter().addItem(scooter.getModele().getNomModele() + " (ID: " + scooter.getIdScooter() + ")");
     }
 }
-
+    
     private void creerLocation() {
         String nomClient = view.getTxtNomClient().getText();
         String prenomClient = view.getTxtPrenomClient().getText();
@@ -44,7 +44,7 @@ public class LocationController {
 
         if (!nomClient.isEmpty() && !prenomClient.isEmpty() && !dateDebutStr.isEmpty() && !dateFinStr.isEmpty() && scooterSelectionne != null) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 Date dateDebut = sdf.parse(dateDebutStr);
                 Date dateFin = sdf.parse(dateFinStr);
 
