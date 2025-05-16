@@ -1,104 +1,134 @@
 package Vue;
-import Model.*;   
+import Model.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
 
 public class ScooterFrame extends JFrame {
-    private JTextField txtModele;
-    private JTextField txtPuissance;
-    private JTextField txtTarifJournalier;
-    private JButton btnAjouterScooter;
-    private JButton btnAfficherDisponibles;
-    private JButton btnCalculerChiffreAffaires;
-    private ParcScooters parc; // Assuming Parc is a class that manages scooters
+    private JTextField txtModele, txtPuissance, txtTarifJournalier;
     private JCheckBox cbA, cbA1, cbB, cbAM;
+    private JButton btnAjouterScooter;
+    private JTable tableScooters;
+    private DefaultTableModel tableModel;
+    private ParcScooters parc;
 
     public ScooterFrame(ParcScooters parc) {
         this.parc = parc;
-        setTitle("Gérer les Scooters");
-        setSize(400, 300);
+        setTitle("Gestion des Scooters");
+        setSize(900, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout(15, 10));
+        getContentPane().setBackground(new Color(245, 245, 245));
 
-        setLayout(new FlowLayout());
+        // ---- Panel Formulaire (gauche) ----
+        JPanel panelForm = new JPanel(new GridBagLayout());
+        panelForm.setBorder(new TitledBorder("Nouveau scooter"));
+        panelForm.setBackground(Color.WHITE);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel lblModele = new JLabel("Modèle :");
-        txtModele = new JTextField(15);
-        JLabel lblPuissance = new JLabel("Puissance :");
-        txtPuissance = new JTextField(5);
-        JLabel lblTarif = new JLabel("Tarif journalier (€) :");
-        txtTarifJournalier = new JTextField(7);
+        // Ligne 1 : Modèle
+        gbc.gridx = 0; gbc.gridy = 0;
+        panelForm.add(new JLabel("Modèle :"), gbc);
+        gbc.gridx = 1;
+        txtModele = new JTextField(14);
+        panelForm.add(txtModele, gbc);
 
+        // Ligne 2 : Puissance
+        gbc.gridx = 0; gbc.gridy = 1;
+        panelForm.add(new JLabel("Puissance (cc) :"), gbc);
+        gbc.gridx = 1;
+        txtPuissance = new JTextField(14);
+        panelForm.add(txtPuissance, gbc);
+
+        // Ligne 3 : Tarif journalier
+        gbc.gridx = 0; gbc.gridy = 2;
+        panelForm.add(new JLabel("Tarif journalier (€) :"), gbc);
+        gbc.gridx = 1;
+        txtTarifJournalier = new JTextField(14);
+        panelForm.add(txtTarifJournalier, gbc);
+
+        // Ligne 4 : Permis autorisés
+        gbc.gridx = 0; gbc.gridy = 3;
+        panelForm.add(new JLabel("Permis autorisés :"), gbc);
+        gbc.gridx = 1;
+        JPanel panelPermis = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         cbA = new JCheckBox("A");
         cbA1 = new JCheckBox("A1");
         cbB = new JCheckBox("B");
         cbAM = new JCheckBox("AM");
+        panelPermis.add(cbA); panelPermis.add(cbA1); panelPermis.add(cbB); panelPermis.add(cbAM);
+        panelPermis.setBackground(Color.WHITE);
+        panelForm.add(panelPermis, gbc);
 
-        JPanel panelForm = new JPanel(new FlowLayout());
-        panelForm.add(lblModele);
-        panelForm.add(txtModele);
-        panelForm.add(lblPuissance);
-        panelForm.add(txtPuissance);
-        panelForm.add(lblTarif);
-        panelForm.add(txtTarifJournalier);
-        panelForm.add(new JLabel("Permis autorisés :"));
-        JPanel panelPermis = new JPanel(new FlowLayout());
-        panelPermis.add(cbA);
-        panelPermis.add(cbA1);
-        panelPermis.add(cbB);
-        panelPermis.add(cbAM);
-        panelForm.add(panelPermis);
-
+        // Ligne 5 : Bouton
+        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         btnAjouterScooter = new JButton("Ajouter Scooter");
-        btnAfficherDisponibles = new JButton("Afficher Scooters Disponibles");
-        btnCalculerChiffreAffaires = new JButton("Calculer Chiffre d'Affaires");
+        btnAjouterScooter.setBackground(new Color(0, 120, 215));
+        btnAjouterScooter.setForeground(Color.WHITE);
+        btnAjouterScooter.setFocusPainted(false);
+        btnAjouterScooter.setToolTipText("Ajouter ce scooter au parc");
+        panelForm.add(btnAjouterScooter, gbc);
 
-        add(panelForm);
-        add(btnAjouterScooter);
-        add(btnAfficherDisponibles);
-        add(btnCalculerChiffreAffaires);
-
-        btnAfficherDisponibles.addActionListener(e -> {
-            StringBuilder sb = new StringBuilder("Scooters disponibles :\n");
-            for (Scooter scooter : parc.getScootersDisponibles()) {
-                Modele modele = scooter.getModele();
-                sb.append("- Scooter ID : ").append(scooter.getIdScooter())
-                  .append(", Modèle : ").append(modele.getNomModele())
-                  .append(", Puissance : ").append(modele.getPuissance())
-                  .append(", Tarif journalier : ").append(modele.getTarifJournalier()).append(" €\n");
+        // ---- Panel Liste Scooters (droite) ----
+        tableModel = new DefaultTableModel(new String[]{"ID", "Modèle", "Puissance", "Tarif", "Permis autorisés", "Disponible"}, 0);
+        tableScooters = new JTable(tableModel) {
+            public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row))
+                    c.setBackground(row % 2 == 0 ? new Color(245, 250, 255) : Color.WHITE);
+                else
+                    c.setBackground(new Color(184, 207, 229));
+                return c;
             }
-            JOptionPane.showMessageDialog(this, sb.toString());
-        });
+        };
+        tableScooters.setRowHeight(22);
+        tableScooters.setSelectionBackground(new Color(184, 207, 229));
+        tableScooters.getTableHeader().setBackground(new Color(220, 220, 220));
+        tableScooters.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        JScrollPane scrollPane = new JScrollPane(tableScooters);
+        scrollPane.setBorder(new TitledBorder("Liste des scooters"));
 
-        btnCalculerChiffreAffaires.addActionListener(e -> {
-            String modeleNom = txtModele.getText();
-            Scooter scooter = parc.getListScooter().stream()
-                    .filter(s -> s.getModele().getNomModele().equals(modeleNom))
-                    .findFirst()
-                    .orElse(null);
-
-            if (scooter != null) {
-                double chiffreAffaires = scooter.calculerChiffreAffaires();
-                JOptionPane.showMessageDialog(this, "Chiffre d'affaires pour le scooter " + modeleNom + " : " + chiffreAffaires + " €");
-            } else {
-                JOptionPane.showMessageDialog(this, "Scooter introuvable.");
-            }
-        });
+        // ---- Ajout panels à la fenêtre ----
+        add(panelForm, BorderLayout.WEST);
+        add(scrollPane, BorderLayout.CENTER);
+        rafraichirTableauScooters();
     }
 
-    public JTextField getTxtModele() {
-        return txtModele;
-    }
-
-    public JButton getBtnAjouterScooter() {
-        return btnAjouterScooter;
-    }
+    // Getters pour le contrôleur
+    public JTextField getTxtModele() { return txtModele; }
     public JTextField getTxtPuissance() { return txtPuissance; }
     public JTextField getTxtTarifJournalier() { return txtTarifJournalier; }
     public JCheckBox getCbA() { return cbA; }
     public JCheckBox getCbA1() { return cbA1; }
     public JCheckBox getCbB() { return cbB; }
     public JCheckBox getCbAM() { return cbAM; }
+    public JButton getBtnAjouterScooter() { return btnAjouterScooter; }
+    public JTable getTableScooters() { return tableScooters; }
+    public DefaultTableModel getTableModel() { return tableModel; }
 
+    public void rafraichirTableauScooters() {
+        tableModel.setRowCount(0);
+        for (Scooter s : parc.getListScooter()) {
+            Modele m = s.getModele();
+            StringBuilder permis = new StringBuilder();
+            if (m != null && m.getListPermis() != null) {
+                for (TypePermis tp : m.getListPermis()) {
+                    permis.append(tp.getType()).append(" ");
+                }
+            }
+            tableModel.addRow(new Object[]{
+                s.getIdScooter(),
+                (m != null ? m.getNomModele() : ""),
+                (m != null ? m.getPuissance() : ""),
+                (m != null ? m.getTarifJournalier() : ""),
+                permis.toString().trim(),
+                s.estDisponible() ? "Oui" : "Non"
+            });
+        }
+    }
 }

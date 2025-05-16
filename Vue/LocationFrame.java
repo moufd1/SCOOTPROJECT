@@ -1,78 +1,111 @@
 package Vue;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import Model.*;
 
-
 public class LocationFrame extends JFrame {
-    private JTextField txtDateDebut, txtDateFin, txtNomClient, txtPrenomClient;
-    private JComboBox<String> comboScooter;
-    private JButton btnCreerLocation;
+    private JTextField txtDateDebut, txtDateFin;
+    private JComboBox<String> comboScooter, comboClient;
+    private JButton btnCreerLocation, btnRetour;
     private JTable tableLocations;
     private DefaultTableModel tableModel;
-    private ParcScooters parc; // Référence au parc
-    private JComboBox<String> comboClient;
-    private JButton btnRetour;
+    private ParcScooters parc;
 
     public LocationFrame(ParcScooters parc) {
-        this.parc = parc; // Initialisation du parc
-
+        this.parc = parc;
         setTitle("Gérer les Locations");
-        setSize(600, 400);
+        setSize(800, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
 
-        // Haut : Formulaire pour ajouter une location
-        JPanel panelForm = new JPanel(new GridLayout(6, 2));
-        JLabel lblDateDebut = new JLabel("Date de Début (dd-MM-yyyy) :");
-        txtDateDebut = new JTextField(10);
-        JLabel lblDateFin = new JLabel("Date de Fin (dd-MM-yyyy) :");
-        txtDateFin = new JTextField(10);
-        JLabel lblScooter = new JLabel("Scooter :");
-        comboScooter = new JComboBox<>();
-        JLabel lblClient = new JLabel("Client :");
+        // Police moderne
+        UIManager.put("Label.font", new Font("Segoe UI", Font.PLAIN, 14));
+        UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 14));
+        UIManager.put("ComboBox.font", new Font("Segoe UI", Font.PLAIN, 14));
+        UIManager.put("Table.font", new Font("Segoe UI", Font.PLAIN, 13));
+        UIManager.put("TableHeader.font", new Font("Segoe UI", Font.BOLD, 14));
+
+        setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(new Color(245, 245, 245));
+
+        // Formulaire
+        JPanel panelForm = new JPanel();
+        panelForm.setLayout(new GridBagLayout());
+        panelForm.setBorder(new TitledBorder("Nouvelle location"));
+        panelForm.setBackground(new Color(255, 255, 255));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Ligne 1 : Client
+        gbc.gridx = 0; gbc.gridy = 0;
+        panelForm.add(new JLabel("Client :"), gbc);
+        gbc.gridx = 1;
         comboClient = new JComboBox<>();
-        
-        
-        panelForm.add(lblClient);
-        panelForm.add(comboClient);
-        panelForm.add(lblDateDebut);
-        panelForm.add(txtDateDebut);
-        panelForm.add(lblDateFin);
-        panelForm.add(txtDateFin);
-        panelForm.add(lblScooter);
-        panelForm.add(comboScooter);
+        comboClient.setPreferredSize(new Dimension(200, 25));
+        panelForm.add(comboClient, gbc);
 
-        
+        // Ligne 2 : Date début
+        gbc.gridx = 0; gbc.gridy = 1;
+        panelForm.add(new JLabel("Date de Début (dd-MM-yyyy) :"), gbc);
+        gbc.gridx = 1;
+        txtDateDebut = new JTextField(12);
+        panelForm.add(txtDateDebut, gbc);
+
+        // Ligne 3 : Date fin
+        gbc.gridx = 0; gbc.gridy = 2;
+        panelForm.add(new JLabel("Date de Fin (dd-MM-yyyy) :"), gbc);
+        gbc.gridx = 1;
+        txtDateFin = new JTextField(12);
+        panelForm.add(txtDateFin, gbc);
+
+        // Ligne 4 : Scooter
+        gbc.gridx = 0; gbc.gridy = 3;
+        panelForm.add(new JLabel("Scooter :"), gbc);
+        gbc.gridx = 1;
+        comboScooter = new JComboBox<>();
+        comboScooter.setPreferredSize(new Dimension(200, 25));
+        panelForm.add(comboScooter, gbc);
 
         add(panelForm, BorderLayout.NORTH);
 
-        // Centre : Tableau pour afficher les locations
+        // Tableau
         tableModel = new DefaultTableModel(new String[]{"ID", "Client", "Scooter", "Début", "Fin", "Pénalité"}, 0);
-        tableLocations = new JTable(tableModel);
+        tableLocations = new JTable(tableModel) {
+            // Lignes alternées
+            public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row))
+                    c.setBackground(row % 2 == 0 ? new Color(245, 250, 255) : Color.WHITE);
+                else
+                    c.setBackground(new Color(184, 207, 229));
+                return c;
+            }
+        };
+        tableLocations.setRowHeight(24);
+        tableLocations.setSelectionBackground(new Color(184, 207, 229));
+        tableLocations.getTableHeader().setBackground(new Color(220, 220, 220));
+        tableLocations.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         JScrollPane scrollPane = new JScrollPane(tableLocations);
+        scrollPane.setBorder(new TitledBorder("Historique des locations"));
         add(scrollPane, BorderLayout.CENTER);
 
-        // Bas : Boutons pour créer/clôturer une location
+        rafraichirTableauLocations();
+
+        // Bas : Boutons
         btnCreerLocation = new JButton("Créer Location");
+        btnCreerLocation.setToolTipText("Créer une nouvelle location");
         btnRetour = new JButton("Retour");
-        JPanel panelButtons = new JPanel(new FlowLayout());
+        btnRetour.setToolTipText("Clôturer la location sélectionnée");
+        JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panelButtons.setBackground(new Color(245, 245, 245));
         panelButtons.add(btnCreerLocation);
-        panelButtons.add(btnRetour); // Ajoute ici, à côté de Créer Location
+        panelButtons.add(btnRetour);
         add(panelButtons, BorderLayout.SOUTH);
-
-    }
-        public JTextField getTxtNomClient() {
-        return txtNomClient;
-    }
-
-    public JTextField getTxtPrenomClient() {
-        return txtPrenomClient;
     }
 
     public JTextField getTxtDateDebut() {
@@ -107,19 +140,19 @@ public class LocationFrame extends JFrame {
         return tableModel;
     }
 
-public void rafraichirTableauLocations() {
-    tableModel.setRowCount(0);
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    for (Location loc : parc.getListLocation()) {
-        String penaliteStr = (loc.getRetour() != null) ? String.valueOf(loc.calculerPenalite()) : "";
-        tableModel.addRow(new Object[]{
-            loc.getIdLocation(),
-            loc.getClient().getNom() + " " + loc.getClient().getPrenom(),
-            loc.getScooter().getModele().getNomModele(),
-            sdf.format(loc.getDateDebut()),
-            sdf.format(loc.getDateFin()),
-            penaliteStr
-        });
+    public void rafraichirTableauLocations() {
+        tableModel.setRowCount(0);
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        for (Location loc : parc.getListLocation()) {
+            String penaliteStr = (loc.getRetour() != null) ? String.valueOf(loc.calculerPenalite()) : "";
+            tableModel.addRow(new Object[]{
+                loc.getIdLocation(),
+                loc.getClient().getNom() + " " + loc.getClient().getPrenom(),
+                loc.getScooter().getModele().getNomModele(),
+                sdf.format(loc.getDateDebut()),
+                sdf.format(loc.getDateFin()),
+                penaliteStr
+            });
+        }
     }
-}
 }

@@ -21,11 +21,11 @@ public class ClientController {
     }
 
     private void ajouterClient() {
-        String nom = view.getTxtNom().getText();
-        String prenom = view.getTxtPrenom().getText();
-        String numPermisStr = view.getTxtNumPermis().getText();
-        String dateExpStr = view.getTxtDateExp().getText();
-        String paysEmission = view.getTxtPaysEmission().getText();
+        String nom = view.getTxtNom().getText().trim();
+        String prenom = view.getTxtPrenom().getText().trim();
+        String numPermisStr = view.getTxtNumPermis().getText().trim();
+        String dateExpStr = view.getTxtDateExp().getText().trim();
+        String paysEmission = view.getTxtPaysEmission().getText().trim();
 
         if (!nom.isEmpty() && !prenom.isEmpty() && !numPermisStr.isEmpty() && !dateExpStr.isEmpty() && !paysEmission.isEmpty()) {
             try {
@@ -41,6 +41,7 @@ public class ClientController {
 
                 Client client = new Client(parc.getListClient().size() + 1, nom, prenom, permis);
                 parc.addClient(client);
+                view.rafraichirTableauClients();
                 JOptionPane.showMessageDialog(view, "Client ajouté : " + nom + " " + prenom);
                 view.getTxtNom().setText("");
                 view.getTxtPrenom().setText("");

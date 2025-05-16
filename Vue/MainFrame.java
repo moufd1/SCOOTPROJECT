@@ -7,62 +7,119 @@ import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class MainFrame extends JFrame {
     private ParcScooters parc;
 
     public MainFrame() {
-        parc = new ParcScooters(1, "Parc Principal"); 
+        parc = new ParcScooters(1, "Parc Principal");
         setTitle("Gestion de Location de Scooters");
-        setSize(500, 400);
+        setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        setLayout(new FlowLayout());
+        // Police moderne
+        UIManager.put("Label.font", new Font("Segoe UI", Font.PLAIN, 16));
+        UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 15));
+        UIManager.put("ComboBox.font", new Font("Segoe UI", Font.PLAIN, 15));
+        UIManager.put("Table.font", new Font("Segoe UI", Font.PLAIN, 14));
+        UIManager.put("TableHeader.font", new Font("Segoe UI", Font.BOLD, 15));
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menuFichier = new JMenu("Fichier");
-        JMenuItem itemOuvrir = new JMenuItem("Ouvrir");
-        JMenuItem itemQuitter = new JMenuItem("Quitter");
+        setLayout(new BorderLayout());
 
-        menuFichier.add(itemOuvrir);
-        menuFichier.addSeparator();
-        menuFichier.add(itemQuitter);
-        menuBar.add(menuFichier);
-        setJMenuBar(menuBar);
+        // ---- Header ----
+        JPanel panelHeader = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelHeader.setBackground(new Color(0, 120, 215));
+        JLabel lblTitre = new JLabel("Gestion de Location de Scooters");
+        lblTitre.setForeground(Color.WHITE);
+        lblTitre.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        panelHeader.add(lblTitre);
+        add(panelHeader, BorderLayout.NORTH);
 
-        itemOuvrir.addActionListener(e -> JOptionPane.showMessageDialog(null, "Fonction Ouvrir activée."));
-        itemQuitter.addActionListener(e -> System.exit(0));
+        // ---- Menu latéral ----
+        JPanel panelMenu = new JPanel();
+        panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
+        panelMenu.setBackground(new Color(245, 250, 255));
+        panelMenu.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20));
 
-        JButton btnClient = new JButton("Gérer les Clients");
-        JButton btnScooter = new JButton("Gérer les Scooters");
-        JButton btnLocation = new JButton("Gérer les Locations");
-        JButton btnChiffreAffaires = new JButton("Afficher Chiffre d'Affaires");
-        JButton btnDepensesClients = new JButton("Afficher Dépenses des Clients");
+        JButton btnClient = new JButton("Clients");
+        btnClient.setToolTipText("Gérer les clients");
+        stylizeButton(btnClient);
+
+        JButton btnScooter = new JButton("Scooters");
+        btnScooter.setToolTipText("Gérer les scooters");
+        stylizeButton(btnScooter);
+
+        JButton btnLocation = new JButton("Locations");
+        btnLocation.setToolTipText("Gérer les locations");
+        stylizeButton(btnLocation);
+
+        panelMenu.add(btnClient);
+        panelMenu.add(Box.createVerticalStrut(20));
+        panelMenu.add(btnScooter);
+        panelMenu.add(Box.createVerticalStrut(20));
+        panelMenu.add(btnLocation);
+
+        panelMenu.add(Box.createVerticalStrut(40));
+        JSeparator sep = new JSeparator();
+        sep.setMaximumSize(new Dimension(180, 2));
+        panelMenu.add(sep);
+
+        JButton btnChiffreAffaires = new JButton("Chiffre d'Affaires");
+        btnChiffreAffaires.setToolTipText("Afficher le chiffre d'affaires du parc");
+        stylizeButton(btnChiffreAffaires);
+
+        JButton btnDepensesClients = new JButton("Dépenses Clients");
+        btnDepensesClients.setToolTipText("Afficher les dépenses des clients");
+        stylizeButton(btnDepensesClients);
+
         JButton btnScootersDisponibles = new JButton("Scooters Disponibles");
+        btnScootersDisponibles.setToolTipText("Voir les scooters disponibles");
+        stylizeButton(btnScootersDisponibles);
 
-        add(btnClient);
-        add(btnScooter);
-        add(btnLocation);
-        add(btnChiffreAffaires);
-        add(btnDepensesClients);
-        add(btnScootersDisponibles);
+        panelMenu.add(Box.createVerticalStrut(20));
+        panelMenu.add(btnChiffreAffaires);
+        panelMenu.add(Box.createVerticalStrut(10));
+        panelMenu.add(btnDepensesClients);
+        panelMenu.add(Box.createVerticalStrut(10));
+        panelMenu.add(btnScootersDisponibles);
 
+        add(panelMenu, BorderLayout.WEST);
+
+        // ---- Centre (image ou logo ou citation) ----
+        JPanel panelCentre = new JPanel();
+        panelCentre.setBackground(Color.WHITE);
+        JLabel lblLogo = new JLabel(); // ou mets un texte/logo simple
+        JLabel lblSlogan = new JLabel("Bienvenue dans votre espace de gestion !");
+        lblSlogan.setFont(new Font("Segoe UI", Font.ITALIC, 20));
+        lblSlogan.setForeground(new Color(0, 120, 215));
+        panelCentre.setLayout(new BoxLayout(panelCentre, BoxLayout.Y_AXIS));
+        lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblSlogan.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelCentre.add(Box.createVerticalGlue());
+        panelCentre.add(lblLogo);
+        panelCentre.add(Box.createVerticalStrut(20));
+        panelCentre.add(lblSlogan);
+        panelCentre.add(Box.createVerticalGlue());
+        add(panelCentre, BorderLayout.CENTER);
+
+        // ---- Actions ----
         btnClient.addActionListener(e -> {
-            ClientFrame clientFrame = new ClientFrame(parc); // Passez l'objet parc
+            ClientFrame clientFrame = new ClientFrame(parc);
             new ClientController(clientFrame, parc);
             clientFrame.setVisible(true);
         });
 
         btnScooter.addActionListener(e -> {
-            ScooterFrame scooterFrame = new ScooterFrame(parc); // Passez l'objet parc
+            ScooterFrame scooterFrame = new ScooterFrame(parc);
             new ScooterController(scooterFrame, parc);
             scooterFrame.setVisible(true);
         });
 
         btnLocation.addActionListener(e -> {
             LocationFrame locationFrame = new LocationFrame(parc);
-            LocationController controller = new LocationController(locationFrame, parc);
+            new LocationController(locationFrame, parc);
             locationFrame.setVisible(true);
         });
 
@@ -89,6 +146,19 @@ public class MainFrame extends JFrame {
             }
             JOptionPane.showMessageDialog(this, sb.toString());
         });
+    }
+
+    private void stylizeButton(JButton btn) {
+        btn.setFocusPainted(false);
+        btn.setBackground(new Color(240, 245, 255));
+        btn.setForeground(new Color(0, 70, 140));
+        btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(0, 120, 215), 1),
+                BorderFactory.createEmptyBorder(8, 18, 8, 18)
+        ));
+        btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btn.setIconTextGap(10);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public static void main(String[] args) {

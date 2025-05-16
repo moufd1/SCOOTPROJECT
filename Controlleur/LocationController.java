@@ -154,6 +154,11 @@ private void cloturerLocation() {
         JOptionPane.showMessageDialog(view, "Location introuvable.");
         return;
     }
+    // Vérifie si déjà retournée
+    if (location.getRetour() != null) {
+        JOptionPane.showMessageDialog(view, "Ce scooter a déjà été retourné pour cette location.");
+        return;
+    }
     String kmRetourStr = JOptionPane.showInputDialog(view, "Entrez le kilométrage de retour :");
     String dateRetourStr = JOptionPane.showInputDialog(view, "Entrez la date de retour (dd-MM-yyyy) :");
     try {

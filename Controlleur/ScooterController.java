@@ -1,5 +1,6 @@
 package Controlleur;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import Model.Modele;
 import Model.ParcScooters;
 import Model.Scooter;
@@ -46,6 +47,8 @@ private void ajouterScooter() {
             parc.addScooter(scooter);
             modele.addScooter(scooter);
 
+            rafraichirTableauScooters(); // <-- AJOUTE CETTE LIGNE ICI
+
             JOptionPane.showMessageDialog(view, "Scooter ajouté avec modèle : " + modeleNom);
             view.getTxtModele().setText("");
             view.getTxtPuissance().setText("");
@@ -55,6 +58,28 @@ private void ajouterScooter() {
         }
     } else {
         JOptionPane.showMessageDialog(view, "Veuillez remplir tous les champs.");
+    }
+}
+
+private void rafraichirTableauScooters() {
+    DefaultTableModel model = view.getTableModel();
+    model.setRowCount(0);
+    for (Scooter s : parc.getListScooter()) {
+        Modele m = s.getModele();
+        StringBuilder permis = new StringBuilder();
+        if (m != null && m.getListPermis() != null) {
+            for (TypePermis tp : m.getListPermis()) {
+                permis.append(tp.getType()).append(" ");
+            }
+        }
+        model.addRow(new Object[]{
+            s.getIdScooter(),
+            (m != null ? m.getNomModele() : ""),
+            (m != null ? m.getPuissance() : ""),
+            (m != null ? m.getTarifJournalier() : ""),
+            permis.toString().trim(),
+            s.estDisponible() ? "Oui" : "Non"
+        });
     }
 }
 }
