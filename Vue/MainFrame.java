@@ -62,7 +62,7 @@ public class MainFrame extends JFrame {
 
         btnLocation.addActionListener(e -> {
             LocationFrame locationFrame = new LocationFrame(parc);
-            new LocationController(locationFrame, parc); // <-- C'est ce contrôleur qui remplit la combo !
+            LocationController controller = new LocationController(locationFrame, parc);
             locationFrame.setVisible(true);
         });
 

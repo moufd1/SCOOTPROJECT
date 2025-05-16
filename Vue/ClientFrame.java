@@ -5,9 +5,13 @@ import java.awt.*;
 
 public class ClientFrame extends JFrame {
     private JTextField txtNom, txtPrenom;
+    private JTextField txtNumPermis;
+    private JTextField txtDateExp; // format : dd-MM-yyyy
+    private JTextField txtPaysEmission;
     private JButton btnAjouterClient;
     private JButton btnAfficherHistorique, btnCalculerDepenses;
     private ParcScooters parc; // Référence au parc
+    private JCheckBox cbA, cbA1, cbB, cbAM; // selon les types de permis possibles
 
     public ClientFrame(ParcScooters parc) {
         this.parc = parc; // Initialisation du parc
@@ -23,18 +27,39 @@ public class ClientFrame extends JFrame {
         txtNom = new JTextField(20);
         JLabel lblPrenom = new JLabel("Prénom :");
         txtPrenom = new JTextField(20);
+        JLabel lblNumPermis = new JLabel("Numéro de permis :");
+        txtNumPermis = new JTextField(10);
+        JLabel lblDateExp = new JLabel("Date expiration (dd-MM-yyyy) :");
+        txtDateExp = new JTextField(10);
+        JLabel lblPaysEmission = new JLabel("Pays d'émission :");
+        txtPaysEmission = new JTextField(5);
 
         btnAjouterClient = new JButton("Ajouter Client");
         btnAfficherHistorique = new JButton("Afficher Historique");
         btnCalculerDepenses = new JButton("Calculer Dépenses");
 
+        cbA = new JCheckBox("A");
+        cbA1 = new JCheckBox("A1");
+        cbB = new JCheckBox("B");
+        cbAM = new JCheckBox("AM");
+
         add(lblNom);
         add(txtNom);
         add(lblPrenom);
         add(txtPrenom);
+        add(lblNumPermis);
+        add(txtNumPermis);
+        add(lblDateExp);
+        add(txtDateExp);
+        add(lblPaysEmission);
+        add(txtPaysEmission);
         add(btnAjouterClient);
         add(btnAfficherHistorique);
         add(btnCalculerDepenses);
+        add(cbA);
+        add(cbA1);
+        add(cbB);
+        add(cbAM);
 
         // Action pour afficher l'historique des locations
         btnAfficherHistorique.addActionListener(e -> {
@@ -83,6 +108,18 @@ public class ClientFrame extends JFrame {
         return txtPrenom;
     }
 
+    public JTextField getTxtNumPermis() {
+        return txtNumPermis;
+    }
+
+    public JTextField getTxtDateExp() {
+        return txtDateExp;
+    }
+
+    public JTextField getTxtPaysEmission() {
+        return txtPaysEmission;
+    }
+
     public JButton getBtnAjouterClient() {
         return btnAjouterClient;
     }
@@ -93,5 +130,21 @@ public class ClientFrame extends JFrame {
 
     public JButton getBtnCalculerDepenses() {
         return btnCalculerDepenses;
+    }
+
+    public JCheckBox getCbA() {
+        return cbA;
+    }
+
+    public JCheckBox getCbA1() {
+        return cbA1;
+    }
+
+    public JCheckBox getCbB() {
+        return cbB;
+    }
+
+    public JCheckBox getCbAM() {
+        return cbAM;
     }
 }

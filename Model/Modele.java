@@ -1,5 +1,6 @@
 package Model;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -11,7 +12,7 @@ public class Modele {
     private int puissance;
     private double tarifJournalier;
     private Vector<Scooter> listScooters;
-    private Vector<Permis> listPermis;  
+    private Vector<TypePermis> listPermisAutorisé;  
 
     public Modele(int idModele, String nomModele, int puissance,double tarifJournalier) {
         this.idModele = idModele;
@@ -19,7 +20,7 @@ public class Modele {
         this.puissance = puissance;
         this.tarifJournalier = tarifJournalier;
         this.listScooters = new Vector<>();
-        this.listPermis = new Vector<>();
+        this.listPermisAutorisé = new Vector<>();
     }
 
     public int getIdModele() {
@@ -62,15 +63,15 @@ public class Modele {
     public void removeScooter(Scooter scooter) {
         this.listScooters.remove(scooter);
     }
-    public void addPermis(Permis permis) {
-        this.listPermis.add(permis);
+    public void addPermis(TypePermis permis) {
+        this.listPermisAutorisé.add(permis);
     }
-    public void removePermis(Permis permis) {
-        this.listPermis.remove(permis);
+    public void removePermis(TypePermis permis) {
+        this.listPermisAutorisé.remove(permis);
     }
 
-    public Vector<Permis> getListPermis() {
-        return listPermis;
+    public Vector<TypePermis> getListPermis() {
+        return listPermisAutorisé;
     }
 
 }

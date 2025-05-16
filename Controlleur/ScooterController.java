@@ -3,6 +3,7 @@ import javax.swing.*;
 import Model.Modele;
 import Model.ParcScooters;
 import Model.Scooter;
+import Model.TypePermis;
 import Vue.ScooterFrame;
 
 public class ScooterController {
@@ -18,6 +19,7 @@ public class ScooterController {
     private void initController() {
         view.getBtnAjouterScooter().addActionListener(e -> ajouterScooter());
     }
+
 
 private void ajouterScooter() {
     String modeleNom = view.getTxtModele().getText();
@@ -35,6 +37,11 @@ private void ajouterScooter() {
                 puissance,
                 tarif
             );
+            if (view.getCbA().isSelected())   modele.addPermis(new TypePermis("A"));
+            if (view.getCbA1().isSelected())  modele.addPermis(new TypePermis("A1"));
+            if (view.getCbB().isSelected())   modele.addPermis(new TypePermis("B"));
+            if (view.getCbAM().isSelected())  modele.addPermis(new TypePermis("AM"));
+            
             Scooter scooter = new Scooter(parc.getListScooter().size() + 1, modele, parc);
             parc.addScooter(scooter);
             modele.addScooter(scooter);
@@ -50,4 +57,4 @@ private void ajouterScooter() {
         JOptionPane.showMessageDialog(view, "Veuillez remplir tous les champs.");
     }
 }
-}   
+}

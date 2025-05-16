@@ -12,6 +12,7 @@ public class ScooterFrame extends JFrame {
     private JButton btnAfficherDisponibles;
     private JButton btnCalculerChiffreAffaires;
     private ParcScooters parc; // Assuming Parc is a class that manages scooters
+    private JCheckBox cbA, cbA1, cbB, cbAM;
 
     public ScooterFrame(ParcScooters parc) {
         this.parc = parc;
@@ -29,16 +30,31 @@ public class ScooterFrame extends JFrame {
         JLabel lblTarif = new JLabel("Tarif journalier (€) :");
         txtTarifJournalier = new JTextField(7);
 
+        cbA = new JCheckBox("A");
+        cbA1 = new JCheckBox("A1");
+        cbB = new JCheckBox("B");
+        cbAM = new JCheckBox("AM");
+
+        JPanel panelForm = new JPanel(new FlowLayout());
+        panelForm.add(lblModele);
+        panelForm.add(txtModele);
+        panelForm.add(lblPuissance);
+        panelForm.add(txtPuissance);
+        panelForm.add(lblTarif);
+        panelForm.add(txtTarifJournalier);
+        panelForm.add(new JLabel("Permis autorisés :"));
+        JPanel panelPermis = new JPanel(new FlowLayout());
+        panelPermis.add(cbA);
+        panelPermis.add(cbA1);
+        panelPermis.add(cbB);
+        panelPermis.add(cbAM);
+        panelForm.add(panelPermis);
+
         btnAjouterScooter = new JButton("Ajouter Scooter");
         btnAfficherDisponibles = new JButton("Afficher Scooters Disponibles");
         btnCalculerChiffreAffaires = new JButton("Calculer Chiffre d'Affaires");
 
-        add(lblModele);
-        add(txtModele);
-        add(lblPuissance);
-        add(txtPuissance);
-        add(lblTarif);
-        add(txtTarifJournalier);
+        add(panelForm);
         add(btnAjouterScooter);
         add(btnAfficherDisponibles);
         add(btnCalculerChiffreAffaires);
@@ -80,5 +96,9 @@ public class ScooterFrame extends JFrame {
     }
     public JTextField getTxtPuissance() { return txtPuissance; }
     public JTextField getTxtTarifJournalier() { return txtTarifJournalier; }
+    public JCheckBox getCbA() { return cbA; }
+    public JCheckBox getCbA1() { return cbA1; }
+    public JCheckBox getCbB() { return cbB; }
+    public JCheckBox getCbAM() { return cbAM; }
 
 }
