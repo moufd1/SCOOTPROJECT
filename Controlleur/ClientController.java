@@ -1,6 +1,5 @@
 package Controlleur;
 import Model.*;
-import Vue.*;
 import Vue.ClientFrame;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
@@ -31,13 +30,14 @@ public class ClientController {
             try {
                 int numPermis = Integer.parseInt(numPermisStr);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                sdf.setLenient(false); 
                 Date dateExp = sdf.parse(dateExpStr);
 
                 Permis permis = new Permis(numPermis, dateExp, paysEmission);
                 if (view.getCbA().isSelected())   permis.addTypePermis(new TypePermis("A"));
                 if (view.getCbA1().isSelected())  permis.addTypePermis(new TypePermis("A1"));
-                if (view.getCbB().isSelected())   permis.addTypePermis(new TypePermis("B"));
                 if (view.getCbAM().isSelected())  permis.addTypePermis(new TypePermis("AM"));
+                if (view.getCbA2().isSelected())   permis.addTypePermis(new TypePermis("A2"));
 
                 Client client = new Client(parc.getListClient().size() + 1, nom, prenom, permis);
                 parc.addClient(client);

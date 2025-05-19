@@ -1,5 +1,4 @@
 package Model;
-import java.io.*;
 import java.util.*;
 
 /**
@@ -11,8 +10,8 @@ public class Scooter {
     private Modele modele;  
     private ParcScooters parc;
     private Vector<Location> listLocation;  
-    private boolean disponible = true; // Indique si le scooter est disponible
-    private Location locationActuelle; // Location en cours
+    private boolean disponible = true; 
+    private Location locationActuelle;
 
     
     public Scooter(int idScooter, Modele modele, ParcScooters parc) {
@@ -63,20 +62,14 @@ public class Scooter {
     public void setDisponible(boolean dispo) {
         this.disponible = dispo;
     }
-    public double calculerChiffreAffaires() {
-        double total = 0.0;
-        for (Location loc : listLocation) {
-            total += loc.calculerMontant();
-        }
-        return total;
-    }
+
     public Location getLocationActuelle() {
         return locationActuelle;
     }
 
     public void setLocationActuelle(Location locationActuelle) {
         this.locationActuelle = locationActuelle;
-        this.disponible = (locationActuelle == null); // Met à jour la disponibilité
+        this.disponible = (locationActuelle == null); 
     }
     @Override
     public String toString() {

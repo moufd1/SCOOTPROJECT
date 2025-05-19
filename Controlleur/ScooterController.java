@@ -1,10 +1,7 @@
 package Controlleur;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import Model.Modele;
-import Model.ParcScooters;
-import Model.Scooter;
-import Model.TypePermis;
+import Model.*;
 import Vue.ScooterFrame;
 
 public class ScooterController {
@@ -40,14 +37,14 @@ private void ajouterScooter() {
             );
             if (view.getCbA().isSelected())   modele.addPermis(new TypePermis("A"));
             if (view.getCbA1().isSelected())  modele.addPermis(new TypePermis("A1"));
-            if (view.getCbB().isSelected())   modele.addPermis(new TypePermis("B"));
             if (view.getCbAM().isSelected())  modele.addPermis(new TypePermis("AM"));
+            if (view.getCbA2().isSelected())  modele.addPermis(new TypePermis("A2"));
             
             Scooter scooter = new Scooter(parc.getListScooter().size() + 1, modele, parc);
             parc.addScooter(scooter);
             modele.addScooter(scooter);
 
-            rafraichirTableauScooters(); // <-- AJOUTE CETTE LIGNE ICI
+            rafraichirTableauScooters();
 
             JOptionPane.showMessageDialog(view, "Scooter ajouté avec modèle : " + modeleNom);
             view.getTxtModele().setText("");

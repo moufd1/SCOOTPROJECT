@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import Model.*;
 
 public class LocationFrame extends JFrame {
@@ -22,7 +21,6 @@ public class LocationFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Police moderne
         UIManager.put("Label.font", new Font("Segoe UI", Font.PLAIN, 14));
         UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 14));
         UIManager.put("ComboBox.font", new Font("Segoe UI", Font.PLAIN, 14));
@@ -32,7 +30,7 @@ public class LocationFrame extends JFrame {
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(new Color(245, 245, 245));
 
-        // Formulaire
+
         JPanel panelForm = new JPanel();
         panelForm.setLayout(new GridBagLayout());
         panelForm.setBorder(new TitledBorder("Nouvelle location"));
@@ -41,7 +39,6 @@ public class LocationFrame extends JFrame {
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Ligne 1 : Client
         gbc.gridx = 0; gbc.gridy = 0;
         panelForm.add(new JLabel("Client :"), gbc);
         gbc.gridx = 1;
@@ -49,21 +46,19 @@ public class LocationFrame extends JFrame {
         comboClient.setPreferredSize(new Dimension(200, 25));
         panelForm.add(comboClient, gbc);
 
-        // Ligne 2 : Date début
         gbc.gridx = 0; gbc.gridy = 1;
         panelForm.add(new JLabel("Date de Début (dd-MM-yyyy) :"), gbc);
         gbc.gridx = 1;
         txtDateDebut = new JTextField(12);
         panelForm.add(txtDateDebut, gbc);
 
-        // Ligne 3 : Date fin
         gbc.gridx = 0; gbc.gridy = 2;
         panelForm.add(new JLabel("Date de Fin (dd-MM-yyyy) :"), gbc);
         gbc.gridx = 1;
         txtDateFin = new JTextField(12);
         panelForm.add(txtDateFin, gbc);
 
-        // Ligne 4 : Scooter
+
         gbc.gridx = 0; gbc.gridy = 3;
         panelForm.add(new JLabel("Scooter :"), gbc);
         gbc.gridx = 1;
@@ -73,10 +68,9 @@ public class LocationFrame extends JFrame {
 
         add(panelForm, BorderLayout.NORTH);
 
-        // Tableau
         tableModel = new DefaultTableModel(new String[]{"ID", "Client", "Scooter", "Début", "Fin", "Pénalité"}, 0);
         tableLocations = new JTable(tableModel) {
-            // Lignes alternées
+
             public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
                 if (!isRowSelected(row))
@@ -96,7 +90,7 @@ public class LocationFrame extends JFrame {
 
         rafraichirTableauLocations();
 
-        // Bas : Boutons
+
         btnCreerLocation = new JButton("Créer Location");
         btnCreerLocation.setToolTipText("Créer une nouvelle location");
         btnRetour = new JButton("Retour");

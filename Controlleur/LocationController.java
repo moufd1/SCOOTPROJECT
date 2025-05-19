@@ -1,17 +1,11 @@
 package Controlleur;
 import javax.swing.*;
-import Model.Client;
-import Model.Location;
-import Model.Modele;
-import Model.ParcScooters;
-import Model.Permis;
-import Model.Retour;
-import Model.Scooter;
-import Model.TypePermis;
+import Model.*;
 import Vue.LocationFrame;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Calendar;
 
 public class LocationController {
     private LocationFrame view;
@@ -58,12 +52,10 @@ private void updateClientCombo() {
     }
 }
     private boolean typePermisCouvre(String permisPossede, String permisRequis) {
-        // Hiérarchie décroissante
         if (permisPossede.equals("A")) return true; // A couvre tout
         if (permisPossede.equals("A2")) return !permisRequis.equals("A");
         if (permisPossede.equals("A1")) return permisRequis.equals("A1") || permisRequis.equals("AM");
         if (permisPossede.equals("AM")) return permisRequis.equals("AM");
-        // Pour B ou autres, adapte selon ton besoin
         return permisPossede.equals(permisRequis);
     }
     private boolean clientPeutLouer(Client client, Modele modele) {
@@ -79,7 +71,15 @@ private void updateClientCombo() {
     return false;
 }
 
-    
+private Date stripTime(Date date) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return cal.getTime();
+}
 
    private void creerLocation() {
     String clientSelectionne = (String) view.getComboClient().getSelectedItem();
@@ -87,7 +87,6 @@ private void updateClientCombo() {
         JOptionPane.showMessageDialog(view, "Veuillez sélectionner un client.");
         return;
     }
-    // Extraire le nom et prénom depuis la chaîne sélectionnée
     String[] infos = clientSelectionne.split(" \\| ")[0].split(" ");
     String nomClient = infos[0];
     String prenomClient = infos[1];
@@ -104,8 +103,28 @@ private void updateClientCombo() {
     if (!dateDebutStr.isEmpty() && !dateFinStr.isEmpty() && scooterSelectionne != null) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            sdf.setLenient(false);
             Date dateDebut = sdf.parse(dateDebutStr);
             Date dateFin = sdf.parse(dateFinStr);
+
+            if (dateDebut.after(dateFin)) {
+                JOptionPane.showMessageDialog(view, "La date de début doit être avant la date de fin.");
+                return;
+            }
+            if (stripTime(dateDebut).before(stripTime(new Date()))) {
+                JOptionPane.showMessageDialog(view, "La date de début ne peut pas être dans le passé.");
+                return;
+            }
+
+            Date dateExpPermis = client.getPermis().getDateExp();
+            if (dateExpPermis.before(dateFin)) {
+                JOptionPane.showMessageDialog(view, "Le permis du client expire avant la fin de la location !");
+                return;
+            }
+            if (dateExpPermis.before(dateDebut)) {
+                JOptionPane.showMessageDialog(view, "Le permis du client n'est plus valide à la date de début de location !");
+                return;
+            }
 
             int scooterId = Integer.parseInt(scooterSelectionne.split("ID: ")[1].replace(")", ""));
             Scooter scooter = parc.getListScooter().stream()
@@ -113,12 +132,10 @@ private void updateClientCombo() {
                     .findFirst()
                     .orElse(null);
 
-            // === Vérification du permis ici ===
             if (!clientPeutLouer(client, scooter.getModele())) {
                 JOptionPane.showMessageDialog(view, "Permis insuffisant pour ce scooter !");
                 return;
             }
-            // === Fin vérification permis ===
 
             if (scooter != null && scooter.estDisponible()) {
                 scooter.setDisponible(false);
@@ -154,7 +171,6 @@ private void cloturerLocation() {
         JOptionPane.showMessageDialog(view, "Location introuvable.");
         return;
     }
-    // Vérifie si déjà retournée
     if (location.getRetour() != null) {
         JOptionPane.showMessageDialog(view, "Ce scooter a déjà été retourné pour cette location.");
         return;
@@ -163,7 +179,19 @@ private void cloturerLocation() {
     String dateRetourStr = JOptionPane.showInputDialog(view, "Entrez la date de retour (dd-MM-yyyy) :");
     try {
         double kmRetour = Double.parseDouble(kmRetourStr);
-        Date dateRetour = new SimpleDateFormat("dd-MM-yyyy").parse(dateRetourStr);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setLenient(false);
+        Date dateRetour = sdf.parse(dateRetourStr);
+
+        if (dateRetour.before(location.getDateDebut())) {
+            JOptionPane.showMessageDialog(view, "La date de retour ne peut pas être avant la date de début de location.");
+            return;
+        }
+        if (dateRetour.before(location.getDateFin())) {
+            int confirm = JOptionPane.showConfirmDialog(view, "La date de retour est avant la date de fin prévue. Continuer ?", "Attention", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) return;
+        }
+
         Retour retour = new Retour(kmRetour, location);
         retour.setDateRetour(dateRetour);
         location.cloturer(retour);

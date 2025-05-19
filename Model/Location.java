@@ -1,5 +1,4 @@
 package Model;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -89,16 +88,13 @@ public class Location {
     public double calculerPenalite() {
         if (retour == null) return 0.0;
         double penalite = 0.0;
-        // Pénalité pour retard (ex: 10€/jour de retard)
         if (retour.getDateRetour() != null && retour.getDateRetour().after(dateFin)) {
             long retard = TimeUnit.DAYS.convert(retour.getDateRetour().getTime() - dateFin.getTime(), TimeUnit.MILLISECONDS);
             penalite += retard * 10.0;
         }
-        // Calcul du nombre de jours de location
         long diffMillis = dateFin.getTime() - dateDebut.getTime();
         long nbJours = Math.max(1, TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS));
-        double kmInclus = 100.0 * nbJours; // 100 km par jour
-        // Pénalité pour dépassement de km (ex: 0.5€/km au-delà du km inclus)
+        double kmInclus = 100.0 * nbJours; 
         if (retour.getKmRetour() > kmInclus) {
             penalite += (retour.getKmRetour() - kmInclus) * 0.5;
         }

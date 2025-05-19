@@ -7,7 +7,6 @@ import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 public class MainFrame extends JFrame {
     private ParcScooters parc;
@@ -19,7 +18,6 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Police moderne
         UIManager.put("Label.font", new Font("Segoe UI", Font.PLAIN, 16));
         UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 15));
         UIManager.put("ComboBox.font", new Font("Segoe UI", Font.PLAIN, 15));
@@ -28,7 +26,6 @@ public class MainFrame extends JFrame {
 
         setLayout(new BorderLayout());
 
-        // ---- Header ----
         JPanel panelHeader = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelHeader.setBackground(new Color(0, 120, 215));
         JLabel lblTitre = new JLabel("Gestion de Location de Scooters");
@@ -37,7 +34,7 @@ public class MainFrame extends JFrame {
         panelHeader.add(lblTitre);
         add(panelHeader, BorderLayout.NORTH);
 
-        // ---- Menu latéral ----
+
         JPanel panelMenu = new JPanel();
         panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
         panelMenu.setBackground(new Color(245, 250, 255));
@@ -87,24 +84,19 @@ public class MainFrame extends JFrame {
 
         add(panelMenu, BorderLayout.WEST);
 
-        // ---- Centre (image ou logo ou citation) ----
         JPanel panelCentre = new JPanel();
         panelCentre.setBackground(Color.WHITE);
-        JLabel lblLogo = new JLabel(); // ou mets un texte/logo simple
         JLabel lblSlogan = new JLabel("Bienvenue dans votre espace de gestion !");
         lblSlogan.setFont(new Font("Segoe UI", Font.ITALIC, 20));
         lblSlogan.setForeground(new Color(0, 120, 215));
         panelCentre.setLayout(new BoxLayout(panelCentre, BoxLayout.Y_AXIS));
-        lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblSlogan.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelCentre.add(Box.createVerticalGlue());
-        panelCentre.add(lblLogo);
         panelCentre.add(Box.createVerticalStrut(20));
         panelCentre.add(lblSlogan);
         panelCentre.add(Box.createVerticalGlue());
         add(panelCentre, BorderLayout.CENTER);
 
-        // ---- Actions ----
         btnClient.addActionListener(e -> {
             ClientFrame clientFrame = new ClientFrame(parc);
             new ClientController(clientFrame, parc);

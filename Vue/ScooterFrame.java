@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class ScooterFrame extends JFrame {
     private JTextField txtModele, txtPuissance, txtTarifJournalier;
-    private JCheckBox cbA, cbA1, cbB, cbAM;
+    private JCheckBox cbA, cbA1, cbA2, cbAM;
     private JButton btnAjouterScooter;
     private JTable tableScooters;
     private DefaultTableModel tableModel;
@@ -22,7 +22,7 @@ public class ScooterFrame extends JFrame {
         setLayout(new BorderLayout(15, 10));
         getContentPane().setBackground(new Color(245, 245, 245));
 
-        // ---- Panel Formulaire (gauche) ----
+
         JPanel panelForm = new JPanel(new GridBagLayout());
         panelForm.setBorder(new TitledBorder("Nouveau scooter"));
         panelForm.setBackground(Color.WHITE);
@@ -30,14 +30,12 @@ public class ScooterFrame extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Ligne 1 : Modèle
         gbc.gridx = 0; gbc.gridy = 0;
         panelForm.add(new JLabel("Modèle :"), gbc);
         gbc.gridx = 1;
         txtModele = new JTextField(14);
         panelForm.add(txtModele, gbc);
 
-        // Ligne 2 : Puissance
         gbc.gridx = 0; gbc.gridy = 1;
         panelForm.add(new JLabel("Puissance (cc) :"), gbc);
         gbc.gridx = 1;
@@ -51,20 +49,19 @@ public class ScooterFrame extends JFrame {
         txtTarifJournalier = new JTextField(14);
         panelForm.add(txtTarifJournalier, gbc);
 
-        // Ligne 4 : Permis autorisés
+
         gbc.gridx = 0; gbc.gridy = 3;
         panelForm.add(new JLabel("Permis autorisés :"), gbc);
         gbc.gridx = 1;
         JPanel panelPermis = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         cbA = new JCheckBox("A");
         cbA1 = new JCheckBox("A1");
-        cbB = new JCheckBox("B");
+        cbA2 = new JCheckBox("A2");
         cbAM = new JCheckBox("AM");
-        panelPermis.add(cbA); panelPermis.add(cbA1); panelPermis.add(cbB); panelPermis.add(cbAM);
+        panelPermis.add(cbA); panelPermis.add(cbA1); panelPermis.add(cbA2); panelPermis.add(cbAM);
         panelPermis.setBackground(Color.WHITE);
         panelForm.add(panelPermis, gbc);
 
-        // Ligne 5 : Bouton
         gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         btnAjouterScooter = new JButton("Ajouter Scooter");
@@ -74,7 +71,7 @@ public class ScooterFrame extends JFrame {
         btnAjouterScooter.setToolTipText("Ajouter ce scooter au parc");
         panelForm.add(btnAjouterScooter, gbc);
 
-        // ---- Panel Liste Scooters (droite) ----
+
         tableModel = new DefaultTableModel(new String[]{"ID", "Modèle", "Puissance", "Tarif", "Permis autorisés", "Disponible"}, 0);
         tableScooters = new JTable(tableModel) {
             public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
@@ -93,19 +90,18 @@ public class ScooterFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableScooters);
         scrollPane.setBorder(new TitledBorder("Liste des scooters"));
 
-        // ---- Ajout panels à la fenêtre ----
+
         add(panelForm, BorderLayout.WEST);
         add(scrollPane, BorderLayout.CENTER);
         rafraichirTableauScooters();
     }
 
-    // Getters pour le contrôleur
     public JTextField getTxtModele() { return txtModele; }
     public JTextField getTxtPuissance() { return txtPuissance; }
     public JTextField getTxtTarifJournalier() { return txtTarifJournalier; }
     public JCheckBox getCbA() { return cbA; }
     public JCheckBox getCbA1() { return cbA1; }
-    public JCheckBox getCbB() { return cbB; }
+    public JCheckBox getCbA2() { return cbA2; }
     public JCheckBox getCbAM() { return cbAM; }
     public JButton getBtnAjouterScooter() { return btnAjouterScooter; }
     public JTable getTableScooters() { return tableScooters; }

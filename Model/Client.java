@@ -74,16 +74,6 @@ public class Client {
                     ", prenom='" + prenom + '\'' +
                     " }";
         }
-        //recheck apres mashi sur nkhliha
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Client)) return false;
-            Client client = (Client) o;
-            return idClient == client.idClient &&
-                    Objects.equals(nom, client.nom) &&
-                    Objects.equals(prenom, client.prenom);
-        }
 
         public void ajouterLocation(Location location) {
             if (location != null) {
@@ -110,7 +100,7 @@ public class Client {
         public void afficherHistoriqueLocations() {
             System.out.println("Historique des locations pour " + nom + " " + prenom + " :");
             for (Location loc : listLocation) {
-                System.out.println(loc);  // Appelle toString() de Location
+                System.out.println(loc);  
             }
         }   
     }

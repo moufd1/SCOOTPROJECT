@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class ClientFrame extends JFrame {
     private JTextField txtNom, txtPrenom, txtNumPermis, txtDateExp, txtPaysEmission;
-    private JCheckBox cbA, cbA1, cbB, cbAM;
+    private JCheckBox cbA, cbA1, cbA2, cbAM;
     private JButton btnAjouterClient;
     private JTable tableClients;
     private DefaultTableModel tableModel;
@@ -23,7 +23,6 @@ public class ClientFrame extends JFrame {
         setLayout(new BorderLayout(15, 10));
         getContentPane().setBackground(new Color(245, 245, 245));
 
-        // ---- Panel Formulaire (gauche) ----
         JPanel panelForm = new JPanel(new GridBagLayout());
         panelForm.setBorder(new TitledBorder("Nouveau client"));
         panelForm.setBackground(Color.WHITE);
@@ -31,55 +30,49 @@ public class ClientFrame extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Ligne 1 : Nom
         gbc.gridx = 0; gbc.gridy = 0;
         panelForm.add(new JLabel("Nom :"), gbc);
         gbc.gridx = 1;
         txtNom = new JTextField(14);
         panelForm.add(txtNom, gbc);
 
-        // Ligne 2 : Prénom
         gbc.gridx = 0; gbc.gridy = 1;
         panelForm.add(new JLabel("Prénom :"), gbc);
         gbc.gridx = 1;
         txtPrenom = new JTextField(14);
         panelForm.add(txtPrenom, gbc);
 
-        // Ligne 3 : Numéro de permis
         gbc.gridx = 0; gbc.gridy = 2;
         panelForm.add(new JLabel("Numéro de permis :"), gbc);
         gbc.gridx = 1;
         txtNumPermis = new JTextField(14);
         panelForm.add(txtNumPermis, gbc);
 
-        // Ligne 4 : Date expiration
         gbc.gridx = 0; gbc.gridy = 3;
         panelForm.add(new JLabel("Date expiration (dd-MM-yyyy) :"), gbc);
         gbc.gridx = 1;
         txtDateExp = new JTextField(14);
         panelForm.add(txtDateExp, gbc);
 
-        // Ligne 5 : Pays d'émission
         gbc.gridx = 0; gbc.gridy = 4;
         panelForm.add(new JLabel("Pays d'émission :"), gbc);
         gbc.gridx = 1;
         txtPaysEmission = new JTextField(14);
         panelForm.add(txtPaysEmission, gbc);
 
-        // Ligne 6 : Types de permis
+
         gbc.gridx = 0; gbc.gridy = 5;
         panelForm.add(new JLabel("Types de permis :"), gbc);
         gbc.gridx = 1;
         JPanel panelPermis = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         cbA = new JCheckBox("A");
         cbA1 = new JCheckBox("A1");
-        cbB = new JCheckBox("B");
+        cbA2 = new JCheckBox("A2");
         cbAM = new JCheckBox("AM");
-        panelPermis.add(cbA); panelPermis.add(cbA1); panelPermis.add(cbB); panelPermis.add(cbAM);
+        panelPermis.add(cbA); panelPermis.add(cbA1); panelPermis.add(cbA2); panelPermis.add(cbAM);
         panelPermis.setBackground(Color.WHITE);
         panelForm.add(panelPermis, gbc);
 
-        // Ligne 7 : Bouton
         gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         btnAjouterClient = new JButton("Ajouter Client");
@@ -89,7 +82,6 @@ public class ClientFrame extends JFrame {
         btnAjouterClient.setToolTipText("Ajouter ce client à la liste");
         panelForm.add(btnAjouterClient, gbc);
 
-        // ---- Panel Liste Clients (droite) ----
         tableModel = new DefaultTableModel(new String[]{"Nom", "Prénom", "Permis", "Expiration", "Pays", "Types"}, 0);
         tableClients = new JTable(tableModel) {
             public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
@@ -108,11 +100,9 @@ public class ClientFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableClients);
         scrollPane.setBorder(new TitledBorder("Liste des clients"));
 
-        // ---- Ajout panels à la fenêtre ----
         add(panelForm, BorderLayout.WEST);
         add(scrollPane, BorderLayout.CENTER);
 
-        // ---- Remplir la liste au démarrage ----
         rafraichirTableauClients();
     }
 
@@ -135,7 +125,7 @@ public class ClientFrame extends JFrame {
         }
     }
 
-    // Getters si besoin pour le contrôleur
+
     public JTextField getTxtNom() { return txtNom; }
     public JTextField getTxtPrenom() { return txtPrenom; }
     public JTextField getTxtNumPermis() { return txtNumPermis; }
@@ -143,7 +133,7 @@ public class ClientFrame extends JFrame {
     public JTextField getTxtPaysEmission() { return txtPaysEmission; }
     public JCheckBox getCbA() { return cbA; }
     public JCheckBox getCbA1() { return cbA1; }
-    public JCheckBox getCbB() { return cbB; }
+    public JCheckBox getCbA2() { return cbA2; }
     public JCheckBox getCbAM() { return cbAM; }
     public JButton getBtnAjouterClient() { return btnAjouterClient; }
     public JTable getTableClients() { return tableClients; }
